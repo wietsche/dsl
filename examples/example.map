@@ -1,0 +1,26 @@
+Par01: 1,10
+
+Dat01: SourceTable
+Col01: id
+Col02: val1
+Col03: val2
+
+Dat02: TargetTable
+Col04: tgt_id
+Col05: tgt_val1
+Col06: tgt_val2
+
+Exp01: Col02 + Col03
+Exp02: Col02 > Col03 
+Exp03: Par01 = Col01
+
+Rul01.s1: WHEN Exp02 THEN Col02
+Rul01.s2: WHEN Exp03 THEN Par01
+Rul01.s3: ELSE Col03
+
+Rul02.s1: WHEN Exp01 THEN Rul01
+Rul02.s2: ELSE Exp01
+
+MAP Col01 -> Col04
+MAP Exp01 -> Col05
+MAP Rul02 -> Col06

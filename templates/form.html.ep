@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Rules Engine</title>
+<meta charset="utf-8">
+<head>
+<title></title>
+<style type="text/css">
+textarea {
+background-color: lightgrey;
+font-size: 10px;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+border: 1px solid black;
+}
+</style>
+</head>
+<body>
+
+<form name="uploadForm">
+<p><input id="uploadInput" type="file" name="myFiles" onchange="loadfile(this)"> 
+</form>
+
+<form id="code_form" method="post">
+<button type="submit" onclick="ShowSelection()" >Submit</button>
+<input id="hid" type="hidden" name="node" value="sql"> 
+</form>
+
+<div style="float: left; width: 100px;">
+      <textarea id ="cde" name="code_text" form="code_form" spellcheck='false' rows="40" cols="50"><%= $html_code %></textarea>
+</div>
+<div style="float: right; width: 900px;">
+      <textarea spellcheck='false' rows="40" cols="50"><%= $html_parsed %></textarea>
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+
+<script>
+function loadfile(input){
+    var reader = new FileReader();
+    reader.onload = function(e){
+    document.getElementById('cde').value = e.target.result;
+    }
+reader.readAsText(input.files[0]);
+}
+</script>
+
+<script>
+function ShowSelection()
+{
+    var textComponent = document.getElementById('cde');
+    var selectedText;
+    // IE version
+    if (document.selection != undefined)
+        {
+        textComponent.focus();
+        var sel = document.selection.createRange();
+        selectedText = sel.text;
+        }
+    // Mozilla version
+    else if (textComponent.selectionStart != undefined)
+        {
+        var startPos = textComponent.selectionStart;
+        var endPos = textComponent.selectionEnd;
+        selectedText = textComponent.value.substring(startPos, endPos)
+        }
+    var hiddenfield = document.getElementById('hid');
+    hiddenfield.value = selectedText;
+}
+</script>
+
+</body>
+</html>
