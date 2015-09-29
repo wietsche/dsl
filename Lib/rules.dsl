@@ -31,12 +31,12 @@ Exp ::=
     InfoVar Operator InfoVar action => found_Exp
      |Exp Operator InfoVar action => found_Exp
    
-
-InfoVar ::= pdec action => found_InfoVar
-        | cdec   action => found_InfoVar
-        | edec   action => found_InfoVar 
-        | rdec   action => found_InfoVar
-        | dsdec  action => found_InfoVar
+InfoVar ::= pdec        action => found_InfoVar
+        | pdec'.'Value2 action => found_InfoVar
+        | cdec          action => found_InfoVar
+        | edec          action => found_InfoVar 
+        | rdec          action => found_InfoVar
+        | dsdec         action => found_InfoVar
 
 rdec ~ 'Rul' num
 pdec ~ 'Par' num 
