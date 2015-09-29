@@ -53,12 +53,13 @@ Operator ~ MathOp | LogOp
 MathOp ~ [\+\*\-\/]
 LogOp ~ 'AND' | 'OR' | '<' | '>' | '=' | 'IN' | '<=' | '>='
 
-Value1 ~ Anum
-Value2 ~ Anum
+Value1 ~ Anum | q Anum q
+Value2 ~ Anum | q Anum q
 ColumnName ~ Anum
 DataSet ~ Anum
 
 Anum ~ [\w]+
+q ~ [\']
 
 :discard ~ whitespace
 whitespace ~ [\s]+
