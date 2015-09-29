@@ -61,7 +61,9 @@ sub make_sql{
     $insert = qq{INSERT INTO $tgt_tab ($insert)};
     
     my $sql = qq{ $insert \n $select \n$from $src_tab \n};
-    return qq{$sql WHERE $scope} 
+    my $where = '';
+    $where = qq{WHERE $scope } if defined $scope;
+    return qq{$sql $where \n} 
 }
 
 #This subroutine will replace a variable with its value
@@ -181,7 +183,6 @@ sub Actions::add_map {
 };
 
 sub Actions::add_scope {
-    print Dumper @_;
     $scope = $info{$_[2]}{value}; 
     return;
 }
