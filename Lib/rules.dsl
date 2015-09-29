@@ -5,9 +5,11 @@ Script ::=
     Definition 
     |Script Definition 
 
-Definition ::= ExpDef | ParamDef |  RulDef | MapDef | DatDef
+Definition ::= ExpDef | ParamDef |  RulDef | MapDef | DatDef | ScopeDef
 
 MapDef ::= 'MAP' InfoVar '->' cdec action => add_map
+
+ScopeDef ::= 'SCP' edec action => add_scope 
  
 RulDef ::= 
      rdec step ':' 'WHEN' InfoVar 'THEN' InfoVar action => add_rule_step
@@ -60,3 +62,14 @@ Anum ~ [\w]+
 
 :discard ~ whitespace
 whitespace ~ [\s]+
+
+:discard ~ <hash comment>
+<hash comment> ~ <terminated hash comment> | <unterminated
+final hash comment>
+<terminated hash comment> ~ '#' <hash comment body> <vertical space char>
+<unterminated final hash comment> ~ '#' <hash comment body>
+<hash comment body> ~ <hash comment char>*
+<vertical space char> ~ [\x{A}\x{B}\x{C}\x{D}\x{2028}\x{2029}]
+<hash comment char> ~ [^\x{A}\x{B}\x{C}\x{D}\x{2028}\x{2029}]
+
+

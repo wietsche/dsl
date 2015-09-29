@@ -9,6 +9,7 @@ use strict;
 
 my %map;
 my %info;
+my $scope;
 
 sub query{
 
@@ -60,8 +61,7 @@ sub make_sql{
     $insert = qq{INSERT INTO $tgt_tab ($insert)};
     
     my $sql = qq{ $insert \n $select \n$from $src_tab \n};
-
-    return $sql
+    return qq{$sql WHERE $scope} 
 }
 
 #This subroutine will replace a variable with its value
@@ -179,5 +179,11 @@ sub Actions::add_map {
     $map{$target} = $source;
     return
 };
+
+sub Actions::add_scope {
+    print Dumper @_;
+    $scope = $info{$_[2]}{value}; 
+    return;
+}
 
 1;
