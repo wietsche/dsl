@@ -49,7 +49,7 @@ num ~ [\d]+
 
 Operator ~ MathOp | LogOp
 MathOp ~ [\+\*\-\/]
-LogOp ~ 'AND' | 'OR' | '<' | '>' | '=' | 'IN'
+LogOp ~ 'AND' | 'OR' | '<' | '>' | '=' | 'IN' | '<=' | '>='
 
 Value1 ~ Anum
 Value2 ~ Anum

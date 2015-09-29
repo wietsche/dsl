@@ -47,7 +47,7 @@ sub make_sql{
     $insert = substr($insert,0,-1);
     $select = substr($select,0,-1);
 
-    #look for remaining dataset - assumes this to be the source
+    #look for remaining dataset - assumes this to be the source...improve
     my @sources = ();
     foreach my $key (keys %info) {
         if ( ($info{$key}{'infotype'} eq 'dataset')
