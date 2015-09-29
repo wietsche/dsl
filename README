@@ -1,3 +1,9 @@
+---------Command Line--------------------
+
+./rlparse.pl examples/example.map
+
+---------Web App-------------------------
+
 1) $ morbo rulesweb.pl
 
 2) Open browser at http://127.0.0.1:3000
