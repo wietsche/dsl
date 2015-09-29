@@ -64,8 +64,19 @@ sub make_sql{
     return $sql
 }
 
+#This subroutine will replace a variable with its value
 sub Actions::found_InfoVar{
-    my $resolved_value =  $info{$_[1]}{value};
+    my $resolved_value;
+    my $lkup = lc $_[3]; 
+    if ($lkup eq 'value1' || $lkup eq 'value2' )
+    { 
+        $resolved_value =  $info{$_[1]}{$lkup};
+    }
+    else
+    {
+        $resolved_value =  $info{$_[1]}{value};
+    }
+
     return $resolved_value
 }
 
