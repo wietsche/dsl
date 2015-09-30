@@ -62,8 +62,8 @@ LogOp ~ 'AND' | 'OR' | '<' | '>' | '=' | 'IN' | '<=' | '>='
 Value ~ 'Value1' | 'Value2'
 List ~ 'List1' | 'List2'
 
-Value1 ~ Float | Anum | q Anum q
-Value2 ~ Float | Anum | q Anum q
+Value1 ~ Numeric | Anum | q Anum q
+Value2 ~ Numeric | Anum | q Anum q
 ColumnName ~ Anum
 DataSet ~ Anum
 Function ~ Anum
@@ -72,8 +72,12 @@ Params ~ csv
 csv ~ Anum | csv ',' Anum
 Anum ~ [\w]+
 q ~ [\']
+
 Num ~ [0-9]+
 Float ~  Num '.' Num | '-'Float
+Int ~ Num | '-'Num
+Numeric ~ Float | Int
+
 
 :discard ~ whitespace
 whitespace ~ [\s]+

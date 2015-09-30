@@ -3,7 +3,7 @@ Par01: 1,-0.9
 
 #Parameter list definition
 Par02: 'a',1
-Par02: 'b',2
+Par02: 'b',-2
 
 #Dataset definition
 Dat01: SourceTable
