@@ -1,5 +1,5 @@
 #Parameter definition
-Par01: 1,10
+Par01: 1,-0.9
 
 #Parameter list definition
 Par02: 'a',1
@@ -19,8 +19,8 @@ Col06: tgt_val2
 Col07: tgt_val3
 
 #Expression definitions
-Exp01: Col02 + Col03
-Exp02: Col02 > Col03 
+Exp01: (Col02 + Col03) * Par01.Value1
+Exp02: Col02 > Col03
 Exp03: Par01 = Col01
 Exp04: Col01 IN Par02.List1
 
