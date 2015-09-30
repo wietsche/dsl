@@ -63,6 +63,7 @@ sub make_sql{
     my $sql = qq{ $insert \n $select \n$from $src_tab \n};
     my $where = '';
     $where = qq{WHERE $scope } if defined $scope;
+
     return qq{$sql $where \n} 
 }
 
@@ -70,7 +71,8 @@ sub make_sql{
 sub Actions::found_InfoVar{
     my $resolved_value;
     my $lkup = lc $_[3]; 
-    if ($lkup eq 'value1' || $lkup eq 'value2' )
+    my %param_qualifier = map { $_ => 1 } ('value1','value2','list1','list2');
+    if (exists ($param_qualifier{$lkup}) )
     { 
         $resolved_value =  $info{$_[1]}{$lkup};
     }
@@ -133,12 +135,28 @@ sub Actions::add_exp{
 
 sub Actions::add_param{
     my(undef,$name,undef,$val1,undef,$val2)=@_;
-    my %p = (infotype => "parameter",
-            value1 => $val1,
-            value2 => $val2,
-            value => "@".$name,
-            );
-    @info{$name} = \%p;
+    
+    if(! exists $info{$name})
+        {
+        my %p = (infotype => "parameter",
+                value1 => $val1,
+                value2 => $val2,
+                value => "@".$name,
+                list1 => qq{($val1)},
+                list2 => qq{($val2)},
+                );
+        @info{$name} = \%p;
+        } else #if exists we extend the lists
+        {
+            #remove  brackets 
+            my $templist1 = substr($info{$name}{list1}, 1, -1);
+            my $templist2 = substr($info{$name}{list2}, 1, -1);
+
+            $info{$name}{list1} = qq{($templist1,$val1)};
+            $info{$name}{list2} = qq{($templist2,$val2)};
+        }
+    
+
     return
 }
 
