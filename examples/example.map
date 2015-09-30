@@ -1,28 +1,42 @@
+#Parameter definition
 Par01: 1,10
 
+#Parameter list definition
+Par02: 'a',1
+Par02: 'b',2
+
+#Dataset definition
 Dat01: SourceTable
 Col01: id
 Col02: val1
 Col03: val2
 
+#Dataset definition
 Dat02: TargetTable
 Col04: tgt_id
 Col05: tgt_val1
 Col06: tgt_val2
+Col07: tgt_val3
 
+#Expression definitions
 Exp01: Col02 + Col03
 Exp02: Col02 > Col03 
 Exp03: Par01 = Col01
+Exp04: Col01 IN Par02.List1
 
+#Rule definition
 Rul01.s1: WHEN Exp02 THEN Col02
-Rul01.s2: WHEN Exp03 THEN Par01
+Rul01.s2: WHEN Exp03 THEN Par01.Value2
 Rul01.s3: ELSE Col03
 
+#Rule definition
 Rul02.s1: WHEN Exp01 THEN Rul01
 Rul02.s2: ELSE Exp01
 
-SCP Exp02
+#Scope definition
+SCP Exp04
 
+#Mapping definitions
 MAP Col01 -> Col04
 MAP Exp01 -> Col05
 MAP Rul02 -> Col06
