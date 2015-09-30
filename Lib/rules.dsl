@@ -7,7 +7,10 @@ Script ::=
 
 Definition ::= ExpDef | ParamDef |  RulDef | MapDef | DatDef | ScopeDef
 
-MapDef ::= 'MAP' Term '->' cdec action => add_map
+MapDef ::= 
+    'MAP' Term '->' cdec          action => add_map
+    |'MAP' Term '->' cdec 'GROUP'   action => add_map
+
 
 ScopeDef ::= 'SCP' edec action => add_scope 
  
@@ -28,6 +31,7 @@ ComExp ::=
 
 Term ::= InfoVar action => found_Term 
         | Function '(' InfoVar ')' action => found_funcTerm
+        | Function '(' InfoVar ',' Params ')' action => found_funcTerm
         | '(' Exp ')' action => found_SubTerm
 
 Exp ::= 
@@ -63,7 +67,9 @@ Value2 ~ Float | Anum | q Anum q
 ColumnName ~ Anum
 DataSet ~ Anum
 Function ~ Anum
+Params ~ csv
 
+csv ~ Anum | csv ',' Anum
 Anum ~ [\w]+
 q ~ [\']
 Num ~ [0-9]+

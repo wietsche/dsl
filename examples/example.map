@@ -33,10 +33,12 @@ Rul01.s3: ELSE Col03
 Rul02.s1: WHEN Exp01 THEN Rul01
 Rul02.s2: ELSE Exp01
 
+#Mapping definitions
+MAP Col01 -> Col04 GROUP
+MAP Exp01 -> Col05
+MAP Rul02 -> Col06
+
 #Scope definition
 SCP Exp04
 
-#Mapping definitions
-MAP Col01 -> Col04
-MAP Exp01 -> Col05
-MAP Rul02 -> Col06
+

@@ -10,6 +10,7 @@ use strict;
 my %map;
 my %info;
 my $scope;
+my $group = '';
 
 sub query{
 
@@ -62,9 +63,11 @@ sub make_sql{
     
     my $sql = qq{ $insert \n $select \n$from $src_tab \n};
     my $where = '';
-    $where = qq{WHERE $scope } if defined $scope;
 
-    return qq{$sql $where \n} 
+    $sql = $sql . qq{WHERE $scope \n} if defined $scope;
+    $sql = $sql . qq{GROUP BY } .  substr($group,1)  if $group ne '';
+
+    return qq{$sql\n} 
 }
 
 #This subroutine will replace a variable with its value
@@ -98,9 +101,10 @@ sub Actions::found_Term{
 }
 
 sub Actions::found_funcTerm{
-    #print Dumper @_;
     my $function = @_[1];
     my $operand = @_[3];
+    my $paramlist = @_[5];
+    $operand .= qq{,$paramlist} if defined $operand;
     return qq{$function($operand)} 
 }
 
@@ -197,15 +201,14 @@ sub Actions::add_last_rule_step{
         $rule_val .= "\t" .$info{$rule}{'steps'}{$step} . "\n";
     }
     $rule_val .= qq{\tEND};
-
     $info{$rule}{'value'} = qq{($rule_val)};
-
    return
 }
 
 sub Actions::add_map {
     my (undef, undef, $source, undef, $target)=@_;
     $map{$target} = $source;
+    $group .= qq{,$source}  if (@_[5] eq 'GROUP');
     return
 };
 
