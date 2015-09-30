@@ -26,7 +26,7 @@ Exp04: Col01 IN Par02.List2
 
 #Rule definition
 Rul01.s1: WHEN Exp02 THEN Col02
-Rul01.s2: WHEN Exp03 THEN Par01.Value2
+Rul01.s2: WHEN (Col01 = Par01.Value1) THEN Par01.Value2
 Rul01.s3: ELSE Col03
 
 #Rule definition

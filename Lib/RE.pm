@@ -97,6 +97,14 @@ sub Actions::found_Term{
     return qq{$_[1]};
 }
 
+sub Actions::found_funcTerm{
+    #print Dumper @_;
+    my $function = @_[1];
+    my $operand = @_[3];
+    return qq{$function($operand)} 
+}
+
+
 sub Actions::test{
     print Dumper @_;
     return;
@@ -151,7 +159,8 @@ sub Actions::add_param{
             #remove  brackets 
             my $templist1 = substr($info{$name}{list1}, 1, -1);
             my $templist2 = substr($info{$name}{list2}, 1, -1);
-
+            
+            #extend lists
             $info{$name}{list1} = qq{($templist1,$val1)};
             $info{$name}{list2} = qq{($templist2,$val2)};
         }

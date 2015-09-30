@@ -7,13 +7,13 @@ Script ::=
 
 Definition ::= ExpDef | ParamDef |  RulDef | MapDef | DatDef | ScopeDef
 
-MapDef ::= 'MAP' InfoVar '->' cdec action => add_map
+MapDef ::= 'MAP' Term '->' cdec action => add_map
 
 ScopeDef ::= 'SCP' edec action => add_scope 
  
 RulDef ::= 
-     rdec step ':' 'WHEN' InfoVar 'THEN' InfoVar action => add_rule_step
-    |rdec step ':' 'ELSE' InfoVar action => add_last_rule_step
+     rdec step ':' 'WHEN' Term 'THEN' InfoVar action => add_rule_step
+    |rdec step ':' 'ELSE' Term action => add_last_rule_step
 
 ExpDef ::= edec ':' ComExp action => add_exp
 ParamDef ::= pdec ':'  Value1 ',' Value2 action => add_param
@@ -27,6 +27,7 @@ ComExp ::=
     |ComExp Operator Term action => found_Exp
 
 Term ::= InfoVar action => found_Term 
+        | Function '(' InfoVar ')' action => found_funcTerm
         | '(' Exp ')' action => found_SubTerm
 
 Exp ::= 
@@ -57,16 +58,16 @@ LogOp ~ 'AND' | 'OR' | '<' | '>' | '=' | 'IN' | '<=' | '>='
 Value ~ 'Value1' | 'Value2'
 List ~ 'List1' | 'List2'
 
-Value1 ~ Dec | Anum | q Anum q
-Value2 ~ Dec | Anum | q Anum q
+Value1 ~ Float | Anum | q Anum q
+Value2 ~ Float | Anum | q Anum q
 ColumnName ~ Anum
 DataSet ~ Anum
+Function ~ Anum
 
 Anum ~ [\w]+
 q ~ [\']
 Num ~ [0-9]+
-Dec ~  Num '.' Num | '-'Dec
-
+Float ~  Num '.' Num | '-'Float
 
 :discard ~ whitespace
 whitespace ~ [\s]+
