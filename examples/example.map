@@ -22,7 +22,7 @@ Col07: tgt_val3
 Exp01: (Col02 + Col03) * Par01.Value1
 Exp02: Col02 > Col03
 Exp03: Par01 = Col01
-Exp04: Col01 IN Par02.List1
+Exp04: Col01 IN Par02.List2
 
 #Rule definition
 Rul01.s1: WHEN Exp02 THEN Col02
