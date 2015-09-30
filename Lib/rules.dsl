@@ -57,7 +57,7 @@ num ~ [\d]+
 
 Operator ~ MathOp | LogOp
 MathOp ~ [\+\*\-\/]
-LogOp ~ 'AND' | 'OR' | '<' | '>' | '=' | 'IN' | '<=' | '>='
+LogOp ~ 'AND' | 'OR' | '<' | '>' | '=' | 'IN' | '<=' | '>=' | '<>'
 
 Value ~ 'Value1' | 'Value2'
 List ~ 'List1' | 'List2'

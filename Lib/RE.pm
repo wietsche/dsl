@@ -1,5 +1,7 @@
 package RE;
 
+use strict;
+use warnings;
 use Marpa::R2;
 use Data::Dumper;
 use File::Slurp;
@@ -15,24 +17,23 @@ my $group = '';
 sub query{
 
 my ($code, $node) = @_;
+$node = '' unless defined $node;
 $node =~ s/\s+//g;
 my $dsl = read_file('Lib/rules.dsl'); 
 my $grammar = Marpa::R2::Scanless::G->new( { source => \$dsl } );
 my $value_ref = $grammar->parse( \$code ,'Actions');
 
 my $res ='';
-$res = &make_sql(%map) if $node eq '';
-$res = &lookup_node($node) if $node ne '';
-
+if ($node eq '') 
+    {
+        $res = &make_sql(%map);
+    }else
+    {
+        $res = $info{$node}{value};
+    }
 return $res;
 }
 
-
-sub lookup_node{
-my ($node) = @_;
-my $value = qq{$node evaluates to:\n\n}. $info{$node}{'value'};
-return $value
-}
 
 sub make_sql{
     #Assuming one source dataset and one target dataset. To be improved.
@@ -73,7 +74,8 @@ sub make_sql{
 #This subroutine will replace a variable with its value
 sub Actions::found_InfoVar{
     my $resolved_value;
-    my $lkup = lc $_[3]; 
+    my $lkup = '';
+    $lkup = lc $_[3] if exists $_[3]; 
     my %param_qualifier = map { $_ => 1 } ('value1','value2','list1','list2');
     if (exists ($param_qualifier{$lkup}) )
     { 
@@ -101,9 +103,9 @@ sub Actions::found_Term{
 }
 
 sub Actions::found_funcTerm{
-    my $function = @_[1];
-    my $operand = @_[3];
-    my $paramlist = @_[5];
+    my $function = $_[1];
+    my $operand = $_[3];
+    my $paramlist = $_[5];
     $operand .= qq{,$paramlist} if defined $operand;
     return qq{$function($operand)} 
 }
@@ -121,7 +123,7 @@ sub Actions::add_col{
             col => $col,
             value => $dataset.".".$col,
             );
-    @info{$name} = \%c;
+    $info{$name} = \%c;
     return $dataset;
 }
 
@@ -130,7 +132,7 @@ sub Actions::add_dataset{
     my %d = (infotype => 'dataset',
             value => $dataset,
             );
-    @info{$name} = \%d;
+    $info{$name} = \%d;
     return $dataset
 }
 
@@ -141,7 +143,7 @@ sub Actions::add_exp{
             exp => $exp,
             value => qq{($exp)},
             );
-    @info{$name} = \%e;
+    $info{$name} = \%e;
     return
 }
 
@@ -157,7 +159,7 @@ sub Actions::add_param{
                 list1 => qq{($val1)},
                 list2 => qq{($val2)},
                 );
-        @info{$name} = \%p;
+        $info{$name} = \%p;
         } else #if exists we extend the lists
         {
             #remove  brackets 
@@ -208,7 +210,8 @@ sub Actions::add_last_rule_step{
 sub Actions::add_map {
     my (undef, undef, $source, undef, $target)=@_;
     $map{$target} = $source;
-    $group .= qq{,$source}  if (@_[5] eq 'GROUP');
+    $source = '' unless defined $source;
+    $group .= qq{,$source}  if ((defined $_[5]) &&  $_[5] eq 'GROUP');
     return
 };
 
