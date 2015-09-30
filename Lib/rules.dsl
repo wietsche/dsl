@@ -31,15 +31,15 @@ Term ::= InfoVar action => found_Term
 
 Exp ::= 
     InfoVar Operator InfoVar action => found_Exp
-     |Exp Operator InfoVar action => found_Exp
+    |Exp Operator InfoVar action => found_Exp
    
-InfoVar ::= pdec                action => found_InfoVar
-        | pdec'.'Value          action => found_InfoVar
-        | pdec'.'List           action => found_InfoVar
-        | cdec                  action => found_InfoVar
-        | edec                  action => found_InfoVar 
-        | rdec                  action => found_InfoVar
-        | dsdec                 action => found_InfoVar
+InfoVar ::= pdec        action => found_InfoVar
+        | pdec'.'Value  action => found_InfoVar
+        | pdec'.'List   action => found_InfoVar
+        | cdec          action => found_InfoVar
+        | edec          action => found_InfoVar 
+        | rdec          action => found_InfoVar
+        | dsdec         action => found_InfoVar
 
 rdec ~ 'Rul' num
 pdec ~ 'Par' num 
@@ -57,13 +57,16 @@ LogOp ~ 'AND' | 'OR' | '<' | '>' | '=' | 'IN' | '<=' | '>='
 Value ~ 'Value1' | 'Value2'
 List ~ 'List1' | 'List2'
 
-Value1 ~ Anum | q Anum q
-Value2 ~ Anum | q Anum q
+Value1 ~ Dec | Anum | q Anum q
+Value2 ~ Dec | Anum | q Anum q
 ColumnName ~ Anum
 DataSet ~ Anum
 
 Anum ~ [\w]+
 q ~ [\']
+Num ~ [0-9]+
+Dec ~  Num '.' Num | '-'Dec
+
 
 :discard ~ whitespace
 whitespace ~ [\s]+
