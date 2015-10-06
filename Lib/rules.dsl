@@ -30,8 +30,8 @@ ComExp ::=
     |ComExp Operator Term action => found_Exp
 
 Term ::= InfoVar action => found_Term 
-        | Function '(' InfoVar ')' action => found_funcTerm
-        | Function '(' InfoVar ',' Params ')' action => found_funcTerm
+        | Function '[' InfoVar ']' action => found_funcTerm
+        | Function '[' InfoVar ',' Params ']' action => found_funcTerm
         | '(' Exp ')' action => found_SubTerm
 
 Exp ::= 

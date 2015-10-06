@@ -106,7 +106,7 @@ sub Actions::found_funcTerm{
     my $function = $_[1];
     my $operand = $_[3];
     my $paramlist = $_[5];
-    $operand .= qq{,$paramlist} if defined $operand;
+    $operand .= qq{,$paramlist} if defined $paramlist;
     return qq{$function($operand)} 
 }
 
